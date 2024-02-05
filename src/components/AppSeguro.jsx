@@ -1,8 +1,11 @@
 import Formulario from "./Formulario"
 import Spinner from "./Spinner"
 import Resultado from "./Resultado"
+import useCotizador from '../hooks/useCotizador'
 
 const AppSeguro = () => {
+  const { isLoading, cotizacion, datos, wasCalculated} = useCotizador()
+
   return (
     <>
       <header className="my-10">
@@ -13,8 +16,16 @@ const AppSeguro = () => {
         <Formulario
 
         />
-        <Spinner/>
-        <Resultado/>
+        {/* { isLoading 
+          ? <Spinner/>
+          : <Resultado/>
+        } */}
+
+        {/* {isLoading ? <Spinner/> : ''}
+        {(Object.values(datos).includes('') || cotizacion === 0) ? '' : <Resultado/> } */}
+
+        {isLoading ? <Spinner/> : ''}
+        {wasCalculated ? <Resultado/> : ''}
       </main>
 
     </>

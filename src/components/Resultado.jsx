@@ -1,6 +1,17 @@
-import { Fragment } from 'react'
+import { Fragment , useCallback, useRef } from 'react'
+import useCotizador from '../hooks/useCotizador'
+import {MARCAS, PLANES, YEARS} from '../constants/index.js'
 
 const Resultado = () => {
+  const { datos, cotizacion } = useCotizador()
+
+  const [getMarca] = useCallback( MARCAS.filter( m => m.id === Number(datos.marca)), [cotizacion] )
+
+  const [getPlan] = useCallback( PLANES.filter( p => p.id === Number(datos.plan)), [cotizacion] )
+
+  const [getYear] = useCallback( YEARS.filter( y => y === Number(datos.year)), [cotizacion] )
+  const yearRef = useRef(datos.year)
+
   return (
     <div className="bg-gray-100 text-center mt-5 p-5 shadow">
       <h2 className="text-gray-600 font-black text-3xl">
@@ -9,24 +20,24 @@ const Resultado = () => {
 
       <p className="my-2">
         <span className="font-bold">Marca: </span>
-        nombre
+        {getMarca?.nombre}
       </p>
 
       <p className="my-2">
         <span className="font-bold">Plan: </span>
-        nombre
+        {getPlan?.nombre}
       </p>
 
       <Fragment>
-      <p className="my-2">
-        <span className="font-bold">Año del Auto: </span>
-        current
-      </p>
+        <p className="my-2">
+          <span className="font-bold">Año del Auto: </span>
+          {yearRef.current}
+        </p>
       </Fragment>
 
       <p className="my-2 text-2xl">
         <span className="font-bold">Total Cotización: </span>
-        Ga
+        {cotizacion}
       </p>
     </div>
   )
